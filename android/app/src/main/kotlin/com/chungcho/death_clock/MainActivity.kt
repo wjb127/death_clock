@@ -1,4 +1,4 @@
-package com.example.death_clock
+package com.chungcho.death_clock
 
 import io.flutter.embedding.android.FlutterActivity
 
