@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
@@ -86,19 +87,43 @@ class _DeathClockPageState extends State<DeathClockPage> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+    showModalBottomSheet(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
+      builder: (BuildContext builder) {
+        return Container(
+          height: MediaQuery.of(context).size.height / 3,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.date,
+            initialDateTime: _birthday ?? DateTime.now(),
+            minimumDate: DateTime(1900),
+            maximumDate: DateTime.now(),
+            onDateTimeChanged: (DateTime newDate) {
+              if (newDate != _birthday) {
+                setState(() {
+                  _birthday = newDate;
+                  _updateTimeLeft();
+                });
+              }
+            },
+          ),
+        );
+      },
     );
-    if (picked != null && picked != _birthday) {
-      setState(() {
-        _birthday = picked;
-        _updateTimeLeft();
-      });
-    }
   }
+  // Future<void> _selectDate(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(1900),
+  //     lastDate: DateTime.now(),
+  //   );
+  //   if (picked != null && picked != _birthday) {
+  //     setState(() {
+  //       _birthday = picked;
+  //       _updateTimeLeft();
+  //     });
+  //   }
+  // }
 
   void _updateTimeLeft() {
     if (_birthday == null) {
