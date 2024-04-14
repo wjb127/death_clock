@@ -77,15 +77,24 @@ class _DeathClockPageState extends State<DeathClockPage> {
               ),
             ),
             if (_birthday != null)
-              Text('당신의 생일: ${DateFormat('yyyy-MM-dd').format(_birthday!)}'),
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0), // 생일 텍스트에 상단 패딩 추가
+                child: Text(
+                    '당신의 생일: ${DateFormat('yyyy-MM-dd').format(_birthday!)}'),
+              ),
             if (_timeLeft != null)
-              Text('당신의 남은 수명: ${_formatDuration(_timeLeft!)}'),
+              Padding(
+                padding:
+                    const EdgeInsets.only(top: 20.0), // 남은 수명 텍스트에 상단 패딩 추가
+                child: Text('당신의 남은 수명: ${_formatDuration(_timeLeft!)}'),
+              ),
           ],
         ),
       ),
     );
   }
 
+  // cupertino 스타일로 변경
   Future<void> _selectDate(BuildContext context) async {
     showModalBottomSheet(
       context: context,
